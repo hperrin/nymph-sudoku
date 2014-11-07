@@ -22,3 +22,12 @@ little under half a second to generate a completed board.
 It seems that ever so rarely, an attempt to make a board will result in an
 unsolvable row. I solved that by keeping a row attempt counter. If it gets too
 high, I just give up and restart.
+
+To make the board, based on difficulty, the game removes some random squares,
+then calculates the number of possible options each remaining square has. If the
+game is set to hard, it will remove the squares with the most options. If it's
+set to easy, it will remove the squares with the least. It removes up to 5 at
+once, then recalculates the possible options.
+
+On hard difficulty, I seem to be getting a lot of clumping of the squares left
+over. I'm going to try remedying this by removing more random squares.
