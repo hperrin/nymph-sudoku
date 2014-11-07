@@ -28,10 +28,10 @@ $timeTaken = microtime(true) - $time;
 	<div>
 		<table border="2">
 			<tbody>
-				<?php foreach ($newGame->board as $x => $curRow): ?>
+				<?php foreach ($newGame->board as $y => $curRow): ?>
 				<tr>
-					<?php foreach ($curRow as $y => $curVal): ?>
-					<td style="width: 50px; height: 50px; text-align: center;"><?php echo "<small>($x, $y) =></small> <b>$curVal</b>"; ?></td>
+					<?php foreach ($curRow as $x => $curVal): ?>
+					<td style="width: 65px; height: 65px; text-align: center;"><?php echo "<small>($x, $y) =></small><br><b>$curVal</b>"; ?></td>
 					<?php endforeach; ?>
 				</tr>
 				<?php endforeach; ?>

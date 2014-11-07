@@ -3,6 +3,7 @@
  * @property string $name The game's text.
  * @property int $difficulty Game's difficulty from 1-4, 1 being easiest.
  * @property array $board The game board.
+ * @property array $solvedBoard The complete game board.
  * @property int $time The time the user has spent playing, in seconds.
  * @property bool $done Whether it's done.
  */
@@ -27,6 +28,7 @@ class Game extends Entity {
 			8 => array(),
 			9 => array(),
 		);
+
 		$this->done = false;
 		parent::__construct($id);
 	}
@@ -46,23 +48,65 @@ class Game extends Entity {
 		// one row randomly.
 		$firstRow = range(1, 9);
 		shuffle($firstRow);
-		for ($y = 0; $y <= 8; $y++) {
-			$this->board[0][$y] = $firstRow[$y];
+		for ($x = 0; $x <= 8; $x++) {
+			$this->board[0][$x] = $firstRow[$x];
 		}
+		$firstBlockAffinity = array($this->board[0][6], $this->board[0][7], $this->board[0][8]);
+		$secondBlockAffinity = array($this->board[0][0], $this->board[0][1], $this->board[0][2]);
+		$thirdBlockAffinity = array($this->board[0][3], $this->board[0][4], $this->board[0][5]);
 
 		// Oh there has to be a better way to do this, but in the interest of
 		// time, I'm basically going to brute force a board together.
-		for ($x = 1; $x <= 8; $x++) {
-			for ($y = 0; $y <= 8; $y++) {
+		for ($y = 1; $y <= 8; $y++) {
+			$rowAttemts = 0;
+			for ($x = 0; $x <= 8; $x++) {
 				$options = $this->optionsLeft($x, $y);
+				// Let's find our affinity.
+				switch ($x) {
+					case 0:
+					case 1:
+					case 2:
+						$affinity = $firstBlockAffinity;
+						break;
+					case 3:
+					case 4:
+					case 5:
+						$affinity = $secondBlockAffinity;
+						break;
+					case 6:
+					case 7:
+					case 8:
+						$affinity = $thirdBlockAffinity;
+						break;
+				}
+				$affinityOptions = array_intersect($affinity, $options);
+				// If we can use a value from our affinity values, let's use it.
+				if ($affinityOptions)
+					$options = $affinityOptions;
+
+				// Do we have options?
 				if (!$options) {
-					$this->board[$x] = array();
-					$y = -1;
+					$rowAttemts++;
+					// If we've been going at it for a while, just give up and
+					// try again.
+					if ($rowAttemts > 15) {
+						$this->board = array(0 => array(),1 => array(),2 => array(),3 => array(),4 => array(),5 => array(),6 => array(),7 => array(),8 => array(),9 => array());
+						return $this->generateBoard();
+					}
+					$this->board[$y] = array();
+					$x = -1;
 					continue;
 				}
-				$this->board[$x][$y] = $options[array_rand($options)];
+
+				$this->board[$y][$x] = $options[array_rand($options)];
 			}
+			$firstBlockAffinity = array($this->board[$y][6], $this->board[$y][7], $this->board[$y][8]);
+			$secondBlockAffinity = array($this->board[$y][0], $this->board[$y][1], $this->board[$y][2]);
+			$thirdBlockAffinity = array($this->board[$y][3], $this->board[$y][4], $this->board[$y][5]);
 		}
+
+		// Cool, our board is done. Now let's keep the solved board.
+		$this->solvedBoard = $this->board;
 	}
 
 	private function optionsLeft($x, $y) {
@@ -73,34 +117,34 @@ class Game extends Entity {
 
 	private function neighborsY($x, $y) {
 		$results = array();
-		for ($x2 = 0; $x2 <= 8; $x2++) {
-			if ($x === $x2)
+		for ($y2 = 0; $y2 <= 8; $y2++) {
+			if ($y === $y2)
 				continue;
-			if (isset($this->board[$x2][$y]))
-				$results[] = $this->board[$x2][$y];
+			if (isset($this->board[$y2][$x]))
+				$results[] = $this->board[$y2][$x];
 		}
 		return $results;
 	}
 	private function neighborsX($x, $y) {
 		$results = array();
-		for ($y2 = 0; $y2 <= 8; $y2++) {
-			if ($y === $y2)
+		for ($x2 = 0; $x2 <= 8; $x2++) {
+			if ($x === $x2)
 				continue;
-			if (isset($this->board[$x][$y2]))
-				$results[] = $this->board[$x][$y2];
+			if (isset($this->board[$y][$x2]))
+				$results[] = $this->board[$y][$x2];
 		}
 		return $results;
 	}
 	private function neighborsSquare($x, $y) {
 		$results = array();
-		$minX = $x - ($x % 3);
-		$minY = $y - ($y % 3);
-		for ($x2 = $minX; $x2 <= $minX+2; $x2++) {
-			for ($y2 = $minY; $y2 <= $minY+2; $y2++) {
-				if ($x2 === $x && $y2 === $y)
+		$minX = $y - ($y % 3);
+		$minY = $x - ($x % 3);
+		for ($y2 = $minX; $y2 <= $minX+2; $y2++) {
+			for ($x2 = $minY; $x2 <= $minY+2; $x2++) {
+				if ($y2 === $y && $x2 === $x)
 					continue;
-				if (isset($this->board[$x2][$y2]))
-					$results[] = $this->board[$x2][$y2];
+				if (isset($this->board[$y2][$x2]))
+					$results[] = $this->board[$y2][$x2];
 			}
 		}
 		return $results;
