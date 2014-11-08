@@ -28,8 +28,12 @@
 
 		// === Class Methods ===
 
-		archive: function(){
-			return this.serverCall('archive', arguments);
+		generateBoard: function(){
+			return this.serverCall('generateBoard', arguments);
+		},
+
+		makeItFun: function(){
+			return this.serverCall('makeItFun', arguments);
 		}
 	};
 	for (var p in thisClass) {

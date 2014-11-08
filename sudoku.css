@@ -1,0 +1,80 @@
+.loading {
+	text-align: center;
+	font-size: 30pt;
+}
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+
+
+.game-selector .column {
+	float: left;
+	width: 50%;
+}
+.game-selector .column > div {
+	padding: 0 20px;
+}
+.game-selector .game {
+	border: aqua 1px solid;
+	border-radius: 3px;
+	background: azure;
+	width: 90%;
+	padding: 5px;
+}
+.game-selector .game .actions {
+	float: right;
+}
+
+.game-selector .form-controls {
+	clear: left;
+	margin-bottom: 1em;
+}
+.game-selector .form-controls span {
+	float: left;
+	clear: left;
+	display: block;
+	width: 130px;
+}
+.game-selector .form-controls .form-control {
+	margin-left: 130px;
+	float: left;
+}
+
+
+
+.game-board {
+	display: table;
+}
+.game-board .row {
+	display: table-row;
+}
+.game-board .square {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	padding: 1em;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	font-size: 16px;
+	border: darkturquoise 1px dashed;
+}
+.game-board .row:first-child .square, .game-board .row:nth-child(3n+1) .square {
+	border-top-style: solid;
+}
+.game-board .row:last-child .square, .game-board .row:nth-child(3n) .square {
+	border-bottom-style: solid;
+}
+.game-board .square:first-child, .game-board .square:nth-child(3n+1) {
+	border-left-style: solid;
+}
+.game-board .square:last-child, .game-board .square:nth-child(3n) {
+	border-right-style: solid;
+}

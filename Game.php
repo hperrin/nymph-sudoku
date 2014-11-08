@@ -9,7 +9,7 @@
  */
 class Game extends Entity {
 	const etype = 'game';
-	public $clientEnabledMethods = array('generateBoard');
+	public $clientEnabledMethods = array('generateBoard', 'makeItFun');
 
 	public function __construct($id = 0) {
 		$this->addTag('game');
