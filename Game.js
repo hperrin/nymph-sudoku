@@ -11,8 +11,8 @@
 	Game = function(id){
 		this.constructor.call(this, id);
 		this.addTag('game');
-		this.difficulty = 1;
-		this.board = [
+		this.data.difficulty = 1;
+		this.data.board = [
 			[], [], [], [], [], [], [], [], [], []
 		];
 		this.data.done = false;
@@ -25,6 +25,10 @@
 
 		// === Class Variables ===
 		etype: "game",
+		mistakes: [
+			[], [], [], [], [], [], [], [], [], []
+		],
+		help: 1,
 
 		// === Class Methods ===
 
@@ -34,6 +38,10 @@
 
 		makeItFun: function(){
 			return this.serverCall('makeItFun', arguments);
+		},
+
+		calculateErrors: function(){
+
 		}
 	};
 	for (var p in thisClass) {

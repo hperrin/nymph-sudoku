@@ -11,13 +11,31 @@
 .cf:after {
     clear: both;
 }
-
-
-
-.game-selector .column {
+.column {
 	float: left;
 	width: 50%;
 }
+
+
+
+.form-controls {
+	clear: left;
+	margin-bottom: 1em;
+}
+.form-controls span {
+	float: left;
+	clear: left;
+	display: block;
+	width: 150px;
+}
+.form-controls .form-control {
+	margin-left: 20px;
+	float: left;
+}
+
+
+
+
 .game-selector .column > div {
 	padding: 0 20px;
 }
@@ -27,27 +45,19 @@
 	background: azure;
 	width: 90%;
 	padding: 5px;
+	margin: .25em 0;
 }
 .game-selector .game .actions {
 	float: right;
 }
 
-.game-selector .form-controls {
-	clear: left;
-	margin-bottom: 1em;
-}
-.game-selector .form-controls span {
-	float: left;
-	clear: left;
-	display: block;
-	width: 130px;
-}
-.game-selector .form-controls .form-control {
-	margin-left: 130px;
-	float: left;
-}
 
 
+.game-play .saving {
+	position: absolute;
+	right: 120px;
+	top: 20px;
+}
 
 .game-board {
 	display: table;
@@ -65,6 +75,12 @@
 	line-height: 16px;
 	font-size: 16px;
 	border: darkturquoise 1px dashed;
+	font-weight: bold;
+	font-family: monospace;
+	cursor: default;
+}
+.game-board .square-preset {
+	color: navy;
 }
 .game-board .row:first-child .square, .game-board .row:nth-child(3n+1) .square {
 	border-top-style: solid;
@@ -77,4 +93,15 @@
 }
 .game-board .square:last-child, .game-board .square:nth-child(3n) {
 	border-right-style: solid;
+}
+.game-board .square input {
+	padding: 0;
+	border: 0;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	font-family: monospace;
 }

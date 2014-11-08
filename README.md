@@ -31,3 +31,12 @@ once, then recalculates the possible options.
 
 On hard difficulty, I seem to be getting a lot of clumping of the squares left
 over. I'm going to try remedying this by removing more random squares.
+
+I ran into a problem of not being able to tell if a square was a preset or not.
+I'm trying to remedy it by making each square an array with 'preset' and 'value'
+keys, but that's making the makeItFun step take upwards of 6 seconds. :P
+
+I solved it by just saving the empty board after it's calculated.
+
+I didn't realize that my affinity fix gave the board a predictable pattern. I
+fixed that by swapping around the affinities.

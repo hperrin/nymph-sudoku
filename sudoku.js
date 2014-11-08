@@ -1,70 +1,77 @@
 angular.module('sudokuApp', []).controller('SudokuController', ['$scope', function($scope) {
-	$scope.games = [];
-	$scope.sort = 'name';
-	$scope.newGame = {
+	$scope.uiState = {
 		player: '',
 		difficulty: 1,
-		loading: false
+		loading: false,
+		sort: 'cdate',
+		games: []
 	};
 	$scope.curGame = null;
 
 	Nymph.getEntities({"class": 'Game'}, {"type": '&', "tag": 'game', "!tag": 'archived'}).then(function(games){
 		if (games && games.length) {
-			Nymph.sort(games, $scope.sort);
-			$scope.games = games;
+			Nymph.sort(games, $scope.uiState.sort);
+			$scope.uiState.games = games;
 			$scope.$apply();
 		}
 	});
 
 	$scope.startNewGame = function() {
-		console.log("Player: ", $scope.newGame.player);
-		if (typeof $scope.newGame.player === 'undefined' || $scope.newGame.player === '')
+		console.log("Player: ", $scope.uiState.player);
+		if (typeof $scope.uiState.player === 'undefined' || $scope.uiState.player === '')
 			return;
-		console.log("Difficulty: ", $scope.newGame.difficulty);
-		if ([1, 2, 3].indexOf($scope.newGame.difficulty) === -1)
+		console.log("Difficulty: ", $scope.uiState.difficulty);
+		if ([1, 2, 3].indexOf($scope.uiState.difficulty) === -1)
 			return;
 		var game = new Game();
 		game.set({
-			'name': $scope.newGame.player + ' at ' + (new Date()).toLocaleString(),
-			'difficulty': $scope.newGame.difficulty
+			'name': $scope.uiState.player + ' at ' + (new Date()).toLocaleString(),
+			'difficulty': $scope.uiState.difficulty
 		});
-		$scope.newGame.loading = "Generating a new game board...";
+		$scope.uiState.loading = "Generating a new game board...";
 		game.generateBoard().then(function(){
-			$scope.newGame.loading = "Applying the difficulty level...";
+			$scope.uiState.loading = "Applying the difficulty level...";
+			$scope.$apply();
 			game.makeItFun().then(function(){
-				$scope.newGame.loading = "Loading the new game...";
+				$scope.uiState.loading = "Loading the new game...";
+				$scope.$apply();
 				game.save().then(function(game){
-					$scope.games.push(game);
-					$scope.newGame.player = '';
-					$scope.newGame.difficulty = 1;
-					$scope.games = Nymph.sort($scope.games, $scope.sort);
+					$scope.uiState.games.push(game);
+					$scope.uiState.player = '';
+					$scope.uiState.difficulty = 1;
+					$scope.uiState.games = Nymph.sort($scope.uiState.games, $scope.uiState.sort);
 					$scope.curGame = game;
-					$scope.newGame.loading = false;
+					$scope.uiState.loading = false;
 					$scope.$apply();
 				}, function(errObj){
-					$scope.newGame.loading = false;
+					$scope.uiState.loading = false;
 					$scope.$apply();
 					alert("Error: "+errObj.textStatus);
 				});
 			}, function(errObj){
-				$scope.newGame.loading = false;
+				$scope.uiState.loading = false;
 				$scope.$apply();
 				alert("Error: "+errObj.textStatus);
 			});
 		}, function(errObj){
-			$scope.newGame.loading = false;
+			$scope.uiState.loading = false;
 			$scope.$apply();
 			alert("Error: "+errObj.textStatus);
 		});
 	};
 
 	$scope.sortGames = function() {
-		$scope.games = Nymph.sort($scope.games, $scope.sort);
-		$scope.$apply();
+		$scope.uiState.games = Nymph.sort($scope.uiState.games, $scope.uiState.sort);
 	};
 
-	$scope.save = function(game) {
-		game.save().then(null, function(errObj){
+	$scope.saveState = function() {
+		$scope.saving = true;
+		$scope.curGame.save().then(function(){
+			$scope.saving = false;
+			$scope.$apply();
+		}, function(errObj){
+			$scope.saving = false;
+			$scope.$apply();
 			alert('Error: '+errObj.textStatus);
 		});
 	};
@@ -73,11 +80,18 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', functi
 		$scope.curGame = game;
 	};
 
+	$scope.clearGame = function(){
+		$scope.saveState();
+		$scope.curGame = null;
+	};
+
 	$scope.deleteGame = function(game) {
-		var key = game.arraySearch($scope.games);
+		if (!confirm('Are you sure?'))
+			return;
+		var key = game.arraySearch($scope.uiState.games);
 		game.delete().then(function(){
 			if (key !== false)
-				$scope.games.splice(key, 1);
+				$scope.uiState.games.splice(key, 1);
 			$scope.$apply();
 		}, function(errObj){
 			alert('Error: '+errObj.textStatus);
@@ -85,8 +99,8 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', functi
 	};
 
 	$scope.archive = function() {
-		var oldGames = $scope.games;
-		$scope.games = [];
+		var oldGames = $scope.uiState.games;
+		$scope.uiState.games = [];
 		angular.forEach(oldGames, function(game) {
 			if (game.get('done')) {
 				game.archive().then(function(success){
@@ -96,7 +110,7 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', functi
 					alert("Error: "+errObj.textStatus+"\nCouldn't archive "+game.get('name'));
 				});
 			} else {
-				$scope.games.push(game);
+				$scope.uiState.games.push(game);
 			}
 		});
 	};

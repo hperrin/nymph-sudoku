@@ -4,6 +4,7 @@
  * @property int $difficulty Game's difficulty from 1-3, 1 being easiest.
  * @property array $board The game board.
  * @property array $solvedBoard The complete game board.
+ * @property array $playBoard The game board after squares are removed.
  * @property int $time The time the user has spent playing, in seconds.
  * @property bool $done Whether it's done.
  */
@@ -62,21 +63,22 @@ class Game extends Entity {
 			for ($x = 0; $x <= 8; $x++) {
 				$options = $this->optionsLeft($x, $y);
 				// Let's find our affinity.
+				$affinities = array($firstBlockAffinity, $secondBlockAffinity, $thirdBlockAffinity);
 				switch ($x) {
 					case 0:
 					case 1:
 					case 2:
-						$affinity = $firstBlockAffinity;
+						$affinity = $affinities[$x % 3];
 						break;
 					case 3:
 					case 4:
 					case 5:
-						$affinity = $secondBlockAffinity;
+						$affinity = $affinities[($x % 3 + 1) % 3];
 						break;
 					case 6:
 					case 7:
 					case 8:
-						$affinity = $thirdBlockAffinity;
+						$affinity = $affinities[($x % 3 + 2) % 3];
 						break;
 				}
 				$affinityOptions = array_intersect($affinity, $options);
@@ -175,6 +177,10 @@ class Game extends Entity {
 					break;
 			}
 		}
+
+		// Now that we have it done, let's keep the original play board before
+		// the user adds squares.
+		$this->playBoard = $this->board;
 	}
 
 	public function optionDistribution($emptySquares = false) {
