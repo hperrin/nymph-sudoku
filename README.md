@@ -39,4 +39,6 @@ keys, but that's making the makeItFun step take upwards of 6 seconds. :P
 I solved it by just saving the empty board after it's calculated.
 
 I didn't realize that my affinity fix gave the board a predictable pattern. I
-fixed that by swapping around the affinities.
+fixed that by continuously swapping around the affinities. Now the function
+takes an average of just under a second to complete a board, but they are much
+less prone to recognizable patterns.

@@ -1,3 +1,8 @@
+body {
+	font-family: Helvetica, Arial, sans;
+	color: #333;
+}
+
 .loading {
 	text-align: center;
 	font-size: 30pt;
@@ -15,6 +20,9 @@
 	float: left;
 	width: 50%;
 }
+.column > div {
+	padding: 0 20px;
+}
 
 
 
@@ -26,7 +34,7 @@
 	float: left;
 	clear: left;
 	display: block;
-	width: 150px;
+	width: 200px;
 }
 .form-controls .form-control {
 	margin-left: 20px;
@@ -36,9 +44,6 @@
 
 
 
-.game-selector .column > div {
-	padding: 0 20px;
-}
 .game-selector .game {
 	border: aqua 1px solid;
 	border-radius: 3px;
@@ -46,6 +51,15 @@
 	width: 90%;
 	padding: 5px;
 	margin: .25em 0;
+}
+.game-selector .game.game-complete {
+	border-color: green;
+	background-color: palegreen;
+}
+.game-selector .game > span {
+	display: block;
+	float: left;
+	padding: 4px;
 }
 .game-selector .game .actions {
 	float: right;
@@ -80,7 +94,7 @@
 	cursor: default;
 }
 .game-board .square-preset {
-	color: navy;
+	color: mediumblue;
 }
 .game-board .row:first-child .square, .game-board .row:nth-child(3n+1) .square {
 	border-top-style: solid;
@@ -104,4 +118,28 @@
 	font-weight: bold;
 	text-align: center;
 	font-family: monospace;
+}
+.game-board .square .mistake {
+	color: red;
+}
+
+
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+button, input[type=button] {
+	border: greenyellow 1px solid;
+	border-radius: 3px;
+	background: honeydew;
+	padding: 4px;
+}
+input[type=text] {
+	border: greenyellow 1px solid;
+	border-radius: 3px;
+	background: honeydew;
+	padding: 6px;
 }

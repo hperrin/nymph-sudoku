@@ -29,7 +29,7 @@ class Game extends Entity {
 			8 => array(),
 			9 => array(),
 		);
-
+		$this->time = 0;
 		$this->done = false;
 		parent::__construct($id);
 	}

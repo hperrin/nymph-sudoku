@@ -69,10 +69,9 @@
 						</div>
 						<div ng-repeat="game in uiState.games" class="game game-{{game.data.done ? 'complete' : 'ongoing'}} cf">
 							<span>{{game.data.name}}</span>
-							<span>{{game.data.time}}</span>
-							<span>({{[0, 'Easy', 'Medium', 'Hard'][game.data.difficulty]}})</span>
+							<span>({{calcTime(game.data.time)}} on {{[0, 'easy', 'medium', 'hard'][game.data.difficulty]}})</span>
 							<div class="actions">
-								<button ng-if="!game.data.done" type="button" ng-click="loadGame(game)">Continue</button>
+								<button type="button" ng-click="loadGame(game)">{{game.data.done ? 'See it Again' : 'Continue'}}</button>
 								&nbsp;&nbsp;&nbsp;
 								<button type="button" ng-click="deleteGame(game)">Delete</button>
 							</div>
@@ -88,40 +87,50 @@
 				<div ng-show="saving" class="saving">
 					<i class="fa fa-spin fa-spinner"></i> Saving
 				</div>
-				<h3>Current Game: {{curGame.data.name}}</h3>
 				<div class="column">
-					<div class="game-board">
-						<div class="row" ng-repeat="(y, row) in curGame.data.board track by $index">
-							<div class="square square-{{curGame.data.playBoard[y][x] ? 'preset' : 'open'}}" ng-repeat="(x, square) in row track by $index">
-								<div ng-if="curGame.data.playBoard[y][x]">
-									{{square}}
+					<div>
+						<h3>Current Game: {{curGame.data.name}}</h3>
+						<div class="game-board">
+							<div class="row" ng-repeat="(y, row) in curGame.data.board track by $index">
+								<div class="square square-{{curGame.data.playBoard[y][x] ? 'preset' : 'open'}}" ng-repeat="(x, square) in row track by $index">
+									<div ng-if="curGame.data.playBoard[y][x]">
+										{{square}}
+									</div>
+									<input type="number" ng-class="{mistake: curGame.mistakes[y][x]}" ng-if="!curGame.data.playBoard[y][x]" ng-model="curGame.data.board[y][x]" ng-pattern="/^[1-9]$/" ng-change="curGame.calculateErrors(); saveState()" />
 								</div>
-								<input ng-if="!curGame.data.playBoard[y][x]" ng-model="curGame.data.board[y][x]" ng-pattern="/^[1-9]$/" ng-change="saveState()" />
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="game-options column">
-					<div class="form-controls cf">
-						<button type="button" ng-click="curGame.data.board = curGame.data.playBoard">Gah! Let me start over.</button>
-						<button type="button" ng-click="curGame.hint()">I could really use a hint here.</button>
-					</div>
-					<div class="form-controls cf">
-						<span>You want some help?</span>
-						<div class="form-control">
-							<label>
-								<input type="radio" name="help" ng-model="curGame.help" ng-value="1" /> No way, I totally got this.
-							</label><br>
-							<label>
-								<input type="radio" name="help" ng-model="curGame.help" ng-value="2" /> Just tell me if I make an obvious mistake.
-							</label><br>
-							<label>
-								<input type="radio" name="help" ng-model="curGame.help" ng-value="3" /> Tell me if I play something that's wrong.
-							</label>
+					<div>
+						<h3>Options and Help</h3>
+						<div class="form-controls cf">
+							<button type="button" ng-click="curGame.data.board = curGame.data.playBoard; curGame.calculateErrors(); startTimer(); saveState()">Gah! Let me start over.</button>
+							<!--<button type="button" ng-click="curGame.hint()">I could really use a hint here.</button>-->
+							<button type="button" ng-click="curGame.data.board = curGame.data.solvedBoard; curGame.calculateErrors(); saveState()">Just solve the damn thing!</button>
 						</div>
-					</div>
-					<div class="form-controls cf">
-						<button type="button" ng-click="clearGame()">{{curGame.data.done ? 'Who\'s The Man' : 'I need a break.'}}</button>
+						<div class="form-controls cf" ng-show="!curGame.data.done">
+							<span>You want some help?</span>
+							<div class="form-control">
+								<label>
+									<input type="radio" name="help" ng-model="curGame.help" ng-value="1" ng-change="curGame.calculateErrors()" /> No way, I totally got this.
+								</label><br>
+								<label>
+									<input type="radio" name="help" ng-model="curGame.help" ng-value="2" ng-change="curGame.calculateErrors()" /> Sure, just tell me if I make an obvious mistake.
+								</label><br>
+								<label>
+									<input type="radio" name="help" ng-model="curGame.help" ng-value="3" ng-change="curGame.calculateErrors()" /> I'm so lost, tell me if I play anything that's wrong.
+								</label>
+							</div>
+						</div>
+						<div class="form-controls cf">
+							<span>Time you've wasted on this:</span>
+							<div class="form-control">{{uiState.timeDiff}}</div>
+						</div>
+						<div class="form-controls cf">
+							<button type="button" ng-click="clearGame()">{{curGame.data.done ? 'Who\'s The Man' : 'I need a break.'}}</button>
+						</div>
 					</div>
 				</div>
 			</div>

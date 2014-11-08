@@ -1,18 +1,18 @@
 {
-	"name": "nymph-sudoku",
-	"description": "A Sudoku game, using Angular for UI and Nymph to save games.",
-	"version": "0.0.0",
-	"authors": [
-		"Hunter Perrin <hunter@sciactive.com>"
-	],
-	"main": "index.php",
-	"license": "LGPL",
-	"ignore": [
-		"**/.*",
-		"node_modules",
-		"bower_components"
-	],
-	"dependencies": {
-		"nymph": "https://github.com/sciactive/nymph.git"
-	}
+  "name": "nymph-sudoku",
+  "description": "A Sudoku game, using Angular for UI and Nymph to save games.",
+  "version": "0.0.0",
+  "authors": [
+    "Hunter Perrin <hunter@sciactive.com>"
+  ],
+  "main": "index.php",
+  "license": "LGPL",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "nymph": "https://github.com/sciactive/nymph.git"
+  }
 }
