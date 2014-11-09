@@ -1,3 +1,4 @@
+/* === Global Styles */
 body {
 	font-family: Helvetica, Arial, sans;
 	color: #333;
@@ -8,11 +9,11 @@ h3 {
 }
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 input[type=number] {
-    -moz-appearance:textfield;
+    -moz-appearance: textfield;
 }
 button, input[type=button] {
 	border: greenyellow 1px solid;
@@ -27,6 +28,7 @@ input[type=text] {
 	padding: 6px;
 }
 
+/* === Layout Styles */
 .container {
 	max-width: 1180px;
 	margin: 0 auto;
@@ -55,9 +57,7 @@ input[type=text] {
 	display: none;
 }
 
-
-
-
+/* === Form Control Styles */
 .form-controls {
 	clear: left;
 	margin-bottom: 1em;
@@ -76,9 +76,7 @@ input[type=text] {
 	margin-bottom: 4px;
 }
 
-
-
-
+/* === Game Selector Styles */
 .game-selector .game {
 	border: gold 1px solid;
 	border-radius: 3px;
@@ -109,15 +107,13 @@ input[type=text] {
 	background: lightpink;
 }
 
-
-
-
+/* === In Game Styles */
 .game-play .saving {
 	position: absolute;
 	right: 120px;
 	top: 20px;
 }
-
+/* --- Game Board Styles */
 .game-board {
 	display: table;
 	margin-bottom: 2em;
@@ -142,6 +138,7 @@ input[type=text] {
 .game-board .square-preset {
 	color: mediumblue;
 }
+/* These make the 3x3 subgrids stand out. */
 .game-board .row:first-child .square, .game-board .row:nth-child(3n+1) .square {
 	border-top-style: solid;
 }
@@ -169,6 +166,7 @@ input[type=text] {
 	color: red;
 }
 
+/* === Tablet Styles */
 @media (max-width: 970px) {
 	.loading > div {
 		font-size: 25pt;
@@ -181,6 +179,8 @@ input[type=text] {
 		margin-bottom: 0;
 	}
 }
+
+/* === Mobile Styles */
 @media (max-width: 648px) {
 	h1 > small {
 		display: block;
@@ -206,11 +206,13 @@ input[type=text] {
 		width: 100%;
 		height: auto;
 	}
+	/* This makes the board the same width as the screen. */
 	.game-board .square {
 		width: 11.11%;
 		height: auto;
 		position: relative;
 	}
+	/* This makes the square values centered. */
 	.game-board .square .dummy {
 		display: block;
 		margin-top: 100%;
