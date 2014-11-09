@@ -43,18 +43,18 @@
 								<span>How tough are you?</span>
 								<div class="form-control">
 									<label>
-										<input type="radio" name="difficulty" ng-model="uiState.difficulty" ng-value="1" /> Practically a baby.
+										<input type="radio" name="difficulty" ng-model="uiState.difficulty" ng-value="1" /> Like a glass horse figurine.
 									</label><br>
 									<label>
-										<input type="radio" name="difficulty" ng-model="uiState.difficulty" ng-value="2" /> I've got some hair on my chest.
+										<input type="radio" name="difficulty" ng-model="uiState.difficulty" ng-value="2" /> I can walk on hot road with bare feet.
 									</label><br>
 									<label>
 										<input type="radio" name="difficulty" ng-model="uiState.difficulty" ng-value="3" /> I eat cactus with the spines.
 									</label>
 								</div>
 							</div>
-							<div class="form-controls cf">
-								<div ng-show="uiState.player">{{uiState.player}} wants {{[0, 'an easy', 'a fair', 'a hard'][uiState.difficulty]}} game.</div>
+							<div ng-show="uiState.player" class="form-controls cf">
+								<div>{{uiState.player}} wants {{[0, 'an easy', 'a moderate', 'a hard'][uiState.difficulty]}} game.</div>
 								<button type="submit">Bring it On!</button>
 							</div>
 						</div>
@@ -71,7 +71,7 @@
 									<input type="radio" ng-model="uiState.sort" ng-change="sortGames()" name="sort" value="name"> Alpha</label>
 							</div>
 							<div ng-repeat="game in uiState.games" class="game game-{{game.data.done ? 'complete' : 'ongoing'}} cf">
-								<span>{{game.data.name}}</span>
+								<span>{{game.data.name}} at {{printDate(game.cdate)}}</span>
 								<span>({{calcTime(game.data.time)}} on {{[0, 'easy', 'medium', 'hard'][game.data.difficulty]}})</span>
 								<div class="actions cf">
 									<button type="button" ng-click="loadGame(game)">{{game.data.done ? 'See it Again' : 'Continue'}}</button>
@@ -92,7 +92,7 @@
 					</div>
 					<div class="column">
 						<div>
-							<h3>Current Game: {{curGame.data.name}}</h3>
+							<h3>Game Player: {{curGame.data.name}}</h3>
 							<div class="game-board">
 								<div class="row" ng-repeat="(y, row) in curGame.data.board track by $index">
 									<div class="square square-{{curGame.data.playBoard[y][x] ? 'preset' : 'open'}}" ng-repeat="(x, square) in row track by $index">

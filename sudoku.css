@@ -11,6 +11,9 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+input[type=number] {
+    -moz-appearance:textfield;
+}
 button, input[type=button] {
 	border: greenyellow 1px solid;
 	border-radius: 3px;
@@ -35,8 +38,8 @@ input[type=text] {
 }
 .cf:before,
 .cf:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+    content: " ";
+    display: table;
 }
 .cf:after {
     clear: both;
@@ -77,16 +80,16 @@ input[type=text] {
 
 
 .game-selector .game {
-	border: aqua 1px solid;
+	border: gold 1px solid;
 	border-radius: 3px;
-	background: azure;
+	background: lightyellow;
 	width: 90%;
 	padding: 5px;
 	margin: .25em 0;
 }
 .game-selector .game.game-complete {
-	border-color: green;
-	background-color: palegreen;
+	border-color: aqua;
+	background-color: azure;
 }
 .game-selector .game > span {
 	display: block;

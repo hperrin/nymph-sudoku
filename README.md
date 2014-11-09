@@ -1,7 +1,35 @@
-nymph-sudoku
+Nymph Sudoku
 ============
 
 A Sudoku game, using Angular for UI and Nymph to save games.
+
+How It Works
+------------
+
+Nymph is used to save and load games, as well as interact with the backend Game
+class. Game.js and Game.php are the classes that represent an individual Sudoku
+game. In the Game PHP class, the `generateBoard` method will generate a complete
+Sudoku board. The `makeItFun` method will remove squares based on the difficulty
+set on the game.
+
+The frontend is designed in Angular, which holds the game and UI state. It uses
+Nymph on the frontend to load the saved games. When you create a new game, it
+uses Nymph to run the `generateBoard` and `makeItFun` methods on the backend. It
+tracks the time spent in a game with an Angular interval. It also checks answers
+each time the board is changed. It will build a `mistakes` array, depending on
+which level of help is selected.
+
+The CSS is all just custom designed CSS. It uses media queries to alter the
+layout for desktop, tablet, and mobile size displays.
+
+Nymph makes saving data very easy. It handles constructing all the tables
+initially, and all database queries come from the frontend, so very little
+backend logic code is required. It also makes communicating with the backend
+much simpler, since remote methods can be run on a class.
+
+Angular makes the frontend design much more organized. It reduces the complexity
+of the interface's code tremendously versus a similar interface written with
+jQuery or Zepto.
 
 How I Built It
 --------------

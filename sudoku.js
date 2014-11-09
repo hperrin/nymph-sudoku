@@ -15,6 +15,9 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 		var seconds = time % 60;
 		return (hours ? (hours+":"+(minutes > 9 ? minutes : "0"+minutes)+":"+(seconds > 9 ? seconds : "0"+seconds)) : (minutes ? minutes+":"+(seconds > 9 ? seconds : "0"+seconds) : seconds));
 	};
+	$scope.printDate = function(time){
+		return (new Date(time*1000)).toLocaleString();
+	};
 
 	Nymph.getEntities({"class": 'Game'}, {"type": '&', "tag": 'game', "!tag": 'archived'}).then(function(games){
 		if (games && games.length) {
@@ -31,7 +34,7 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 			return;
 		var game = new Game();
 		game.set({
-			'name': $scope.uiState.player + ' at ' + (new Date()).toLocaleString(),
+			'name': $scope.uiState.player,
 			'difficulty': $scope.uiState.difficulty
 		});
 		$scope.uiState.loading = "Generating a new game board...";
@@ -120,7 +123,9 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 			}
 			$scope.curGame.data.time++;
 			$scope.uiState.timeDiff = $scope.calcTime($scope.curGame.data.time);
-			$scope.curGame.save();
+			// Don't save too often.
+			if ($scope.curGame.data.time % 10 === 0)
+				$scope.curGame.save();
 		}, 1000);
 	};
 	$scope.stopTimer = function(){
