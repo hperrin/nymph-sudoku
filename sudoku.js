@@ -25,10 +25,8 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 	});
 
 	$scope.startNewGame = function() {
-		console.log("Player: ", $scope.uiState.player);
 		if (typeof $scope.uiState.player === 'undefined' || $scope.uiState.player === '')
 			return;
-		console.log("Difficulty: ", $scope.uiState.difficulty);
 		if ([1, 2, 3].indexOf($scope.uiState.difficulty) === -1)
 			return;
 		var game = new Game();
@@ -113,7 +111,6 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 	var gameTimer;
 	$scope.startTimer = function(){
 		$scope.uiState.timeDiff = $scope.calcTime($scope.curGame.data.time);
-		console.log("Timer Defined: ", angular.isDefined(gameTimer));
 		if (angular.isDefined(gameTimer))
 			$interval.cancel(gameTimer);
 		gameTimer = $interval(function(){
