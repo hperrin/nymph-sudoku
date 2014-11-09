@@ -117,8 +117,8 @@ class Game extends Entity {
 		// More squares will be removed for higher difficulties.
 		switch ($this->difficulty) {
 			case 1:
-				$remove = 48;
-				$randoCount = 20;
+				$remove = 45;
+				$randoCount = 15;
 				break;
 			case 2:
 				$remove = 50;

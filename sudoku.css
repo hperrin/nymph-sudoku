@@ -2,7 +2,33 @@ body {
 	font-family: Helvetica, Arial, sans;
 	color: #333;
 }
+h3 {
+	border-bottom: greenyellow 1px solid;
+	padding-bottom: 4px;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+button, input[type=button] {
+	border: greenyellow 1px solid;
+	border-radius: 3px;
+	background: honeydew;
+	padding: 4px;
+}
+input[type=text] {
+	border: greenyellow 1px solid;
+	border-radius: 3px;
+	background: honeydew;
+	padding: 6px;
+}
 
+.container {
+	max-width: 1180px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
 .loading {
 	text-align: center;
 	font-size: 30pt;
@@ -12,7 +38,6 @@ body {
     content: " "; /* 1 */
     display: table; /* 2 */
 }
-
 .cf:after {
     clear: both;
 }
@@ -23,6 +48,10 @@ body {
 .column > div {
 	padding: 0 20px;
 }
+.dummy {
+	display: none;
+}
+
 
 
 
@@ -39,6 +68,9 @@ body {
 .form-controls .form-control {
 	margin-left: 20px;
 	float: left;
+}
+.form-controls button {
+	margin-bottom: 4px;
 }
 
 
@@ -62,8 +94,18 @@ body {
 	padding: 4px;
 }
 .game-selector .game .actions {
+	width: 100%;
+	float: left;
+	clear: both;
+}
+.game-selector .game .actions > button:last-child {
 	float: right;
 }
+.game-selector .game .actions .delete-button {
+	border-color: red;
+	background: lightpink;
+}
+
 
 
 
@@ -88,7 +130,7 @@ body {
 	height: 16px;
 	line-height: 16px;
 	font-size: 16px;
-	border: darkturquoise 1px dashed;
+	border: aqua 1px dashed;
 	font-weight: bold;
 	font-family: monospace;
 	cursor: default;
@@ -123,23 +165,54 @@ body {
 	color: red;
 }
 
-
-
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+@media (max-width: 970px) {
+	.loading > div {
+		font-size: 25pt;
+	}
+	.column {
+		float: none;
+		width: 100%;
+	}
 }
-button, input[type=button] {
-	border: greenyellow 1px solid;
-	border-radius: 3px;
-	background: honeydew;
-	padding: 4px;
-}
-input[type=text] {
-	border: greenyellow 1px solid;
-	border-radius: 3px;
-	background: honeydew;
-	padding: 6px;
+@media (max-width: 648px) {
+	h1 > small {
+		display: block;
+	}
+	.container {
+		padding-top: 0;
+	}
+	.loading > div {
+		font-size: 15pt;
+	}
+	.column > div {
+		padding: 0;
+	}
+	.form-controls .form-control {
+		margin-top: 10px;
+		margin-left: 0;
+		clear: left;
+	}
+	.game-selector .game > span {
+		float: none;
+	}
+	.game-board {
+		width: 100%;
+		height: auto;
+	}
+	.game-board .square {
+		width: 11.11%;
+		height: auto;
+		position: relative;
+	}
+	.game-board .square .dummy {
+		display: block;
+		margin-top: 100%;
+	}
+	.game-board .square .value {
+		width: 16px;
+		height: 16px;
+		margin: auto;
+		position: absolute;
+		top: 0; left: 0; bottom: 0; right: 0;
+	}
 }
