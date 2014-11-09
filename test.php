@@ -18,11 +18,11 @@ if (is_numeric($_REQUEST['difficulty']) && (int)$_REQUEST['difficulty'] >= 1 && 
 
 $time = microtime(true);
 $newGame->generateBoard();
-$timeTaken = microtime(true) - $time;
+$timeTaken = round(microtime(true) - $time, 3);
 
 $time = microtime(true);
 $newGame->makeItFun();
-$timeTakenFun = microtime(true) - $time;
+$timeTakenFun = round(microtime(true) - $time, 3);
 
 $optionDistribution = $newGame->optionDistribution(true);
 $optionGrid = $optionDistribution['grid'];
@@ -57,16 +57,16 @@ ksort($optionCoords);
 	<p>It took <?php echo $timeTakenFun; ?> seconds to make it fun on <?php echo $newGame->difficulty == 1 ? 'easy' : ($newGame->difficulty == 2 ? 'medium' : 'hard'); ?> difficulty:</p>
 	<div>
 		<?php foreach ($optionCoords as $key => $squares): ?>
-		<?php echo count($squares); ?> squares with <?php echo $key; ?> possible values.<br>
+		<code style="white-space: pre;"><?php echo count($squares) < 10 ? ' '.count($squares) : count($squares); ?> square<?php echo count($squares) > 1 ? 's' : ' '; ?> with <?php echo $key; ?> possible values.</code><br>
 		<?php endforeach; ?>
-	</div>
+	</div><br>
 	<div>
 		<table border="2">
 			<tbody>
 				<?php foreach ($newGame->board as $y => $curRow): ?>
 				<tr>
 					<?php foreach ($curRow as $x => $curVal): ?>
-					<td style="width: 65px; height: 65px; text-align: center;"><?php echo $curVal ? "<strong>$curVal</strong>" : "<small>{$optionGrid[$y][$x]} option(s)</small>"; ?></td>
+					<td style="width: 65px; height: 65px; text-align: center;"><?php echo $curVal ? "<strong>$curVal</strong>" : "<small>{$optionGrid[$y][$x]} option".($optionGrid[$y][$x] > 1 ? 's' : '')."</small>"; ?></td>
 					<?php endforeach; ?>
 				</tr>
 				<?php endforeach; ?>
