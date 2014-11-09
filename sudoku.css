@@ -120,6 +120,7 @@ input[type=text] {
 
 .game-board {
 	display: table;
+	margin-bottom: 2em;
 }
 .game-board .row {
 	display: table-row;
@@ -175,6 +176,9 @@ input[type=text] {
 	.column {
 		float: none;
 		width: 100%;
+	}
+	.game-board {
+		margin-bottom: 0;
 	}
 }
 @media (max-width: 648px) {
