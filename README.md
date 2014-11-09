@@ -6,6 +6,11 @@ A Sudoku game, using Angular for UI and Nymph to save games.
 How It Works
 ------------
 
+Bower is used to handle dependencies. Before you can run the game, you have to
+run `bower install` in the main directory. You also need to set up a database
+for Nymph, and put the details in config.php. Additional instructions on setting
+up Nymph can be found [here](https://github.com/sciactive/nymph/wiki/Setup-Guide).
+
 Nymph is used to save and load games, as well as interact with the backend Game
 class. Game.js and Game.php are the classes that represent an individual Sudoku
 game. In the Game PHP class, the `generateBoard` method will generate a complete
