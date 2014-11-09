@@ -74,7 +74,7 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 		$scope.uiState.games = Nymph.sort($scope.uiState.games, $scope.uiState.sort);
 	};
 
-	$scope.saveState = function() {
+	$scope.saveState = function(showErr) {
 		$scope.saving = true;
 		$scope.curGame.save().then(function(){
 			$scope.saving = false;
@@ -82,7 +82,8 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 		}, function(errObj){
 			$scope.saving = false;
 			$scope.$apply();
-			alert('Error: '+errObj.textStatus);
+			if (showErr)
+				alert('Error: '+errObj.textStatus);
 		});
 	};
 
@@ -93,7 +94,7 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 	};
 
 	$scope.clearGame = function(){
-		$scope.saveState();
+		$scope.saveState(true);
 		$scope.curGame = null;
 		$scope.stopTimer();
 	};
@@ -130,22 +131,5 @@ angular.module('sudokuApp', []).controller('SudokuController', ['$scope', '$inte
 	};
 	$scope.stopTimer = function(){
 		$interval.cancel(gameTimer);
-	};
-
-	$scope.archive = function(){
-		var oldGames = $scope.uiState.games;
-		$scope.uiState.games = [];
-		angular.forEach(oldGames, function(game) {
-			if (game.get('done')) {
-				game.archive().then(function(success){
-					if (!success)
-						alert("Couldn't save changes to "+game.get('name'));
-				}, function(errObj){
-					alert("Error: "+errObj.textStatus+"\nCouldn't archive "+game.get('name'));
-				});
-			} else {
-				$scope.uiState.games.push(game);
-			}
-		});
 	};
 }]);
