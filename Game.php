@@ -27,7 +27,6 @@ class Game extends Entity {
 			6 => array(),
 			7 => array(),
 			8 => array(),
-			9 => array(),
 		);
 		$this->time = 0;
 		$this->done = false;
@@ -114,7 +113,7 @@ class Game extends Entity {
 					// If we've been going at it for a while, just give up and
 					// try again.
 					if ($rowAttemts > 15) {
-						$this->board = array(0 => array(),1 => array(),2 => array(),3 => array(),4 => array(),5 => array(),6 => array(),7 => array(),8 => array(),9 => array());
+						$this->board = array(0 => array(),1 => array(),2 => array(),3 => array(),4 => array(),5 => array(),6 => array(),7 => array(),8 => array());
 						return $this->generateBoard();
 					}
 					$this->board[$y] = array();
@@ -207,7 +206,7 @@ class Game extends Entity {
 
 	public function optionDistribution($emptySquares = false) {
 		$counts = array();
-		$grid = array(0 => array(),1 => array(),2 => array(),3 => array(),4 => array(),5 => array(),6 => array(),7 => array(),8 => array(),9 => array());
+		$grid = array(0 => array(),1 => array(),2 => array(),3 => array(),4 => array(),5 => array(),6 => array(),7 => array(),8 => array());
 
 		for ($y = 0; $y <= 8; $y++) {
 			for ($x = 0; $x <= 8; $x++) {

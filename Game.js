@@ -13,7 +13,7 @@
 		this.addTag('game');
 		this.data.difficulty = 1;
 		this.data.board = [
-			[], [], [], [], [], [], [], [], [], []
+			[], [], [], [], [], [], [], [], []
 		];
 		this.data.time = 0;
 		this.data.done = false;
@@ -27,7 +27,7 @@
 		// === Class Variables ===
 		etype: "game",
 		mistakes: [
-			[], [], [], [], [], [], [], [], [], []
+			[], [], [], [], [], [], [], [], []
 		],
 		help: 1,
 
@@ -56,16 +56,18 @@
 			this.data.done = true;
 		},
 		calculateErrors: function(){
-			console.log("Calculating Errors.");
 			this.checkDone();
-			console.log("Done: ", this.data.done);
-			if (this.data.done)
+			if (this.data.done) {
+				this.mistakes = [
+					[], [], [], [], [], [], [], [], []
+				];
 				return;
+			}
 			switch (this.help) {
 				case 1:
 					// Oh, we got a badass over here.
 					this.mistakes = [
-						[], [], [], [], [], [], [], [], [], []
+						[], [], [], [], [], [], [], [], []
 					];
 					break;
 				case 2:
