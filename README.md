@@ -17,6 +17,10 @@ game. In the Game PHP class, the `generateBoard` method will generate a complete
 Sudoku board. The `makeItFun` method will remove squares based on the difficulty
 set on the game.
 
+Nymph supplies import and export functionality, which is used to provide the
+saved games import/export. This helps if transitioning from MySQL to Postgres or
+vice versa.
+
 The frontend is designed in Angular, which holds the game and UI state. It uses
 Nymph on the frontend to load the saved games. When you create a new game, it
 uses Nymph to run the `generateBoard` and `makeItFun` methods on the backend. It

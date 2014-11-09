@@ -1,3 +1,22 @@
+<?php
+
+if ($_REQUEST['action'] === 'export') {
+	require 'bower_components/requirephp/require.php';
+
+	require 'bower_components/nymph/src/Nymph.php';
+	RPHP::_('NymphConfig', array(), function(){
+		return include 'config.php';
+	});
+
+	RPHP::_(array('Nymph'), function(){
+		require 'Game.php';
+	});
+
+	RPHP::_('Nymph')->exportPrint();
+	exit;
+}
+
+?>
 <!doctype html>
 <html>
 	<head>
@@ -59,18 +78,27 @@
 							</div>
 						</div>
 					</form>
-					<div class="column" ng-if="uiState.games.length">
+					<div class="column">
 						<div>
 							<h3>Saved Games</h3>
-							<div ng-show="uiState.games.length > 1">
+							<p>
+								<a href="import.php">Import Saved Games</a>
+								<span ng-if="uiState.games.length">
+									| <a href="?action=export">Export Saved Games</a>
+								</span>
+							</p>
+							<p ng-if="!uiState.games.length">
+								<span>There are no saved games.</span>
+							</p>
+							<p ng-show="uiState.games.length > 1">
 								Sort: <br>
 								<label style="font-weight: normal;">
 									<input type="radio" ng-model="uiState.sort" ng-change="sortGames()" name="sort" value="cdate"> Started</label>
 								&nbsp;&nbsp;&nbsp;
 								<label style="font-weight: normal;">
 									<input type="radio" ng-model="uiState.sort" ng-change="sortGames()" name="sort" value="name"> Alpha</label>
-							</div>
-							<div ng-repeat="game in uiState.games" class="game game-{{game.data.done ? 'complete' : 'ongoing'}} cf">
+							</p>
+							<div ng-if="uiState.games.length" ng-repeat="game in uiState.games" class="game game-{{game.data.done ? 'complete' : 'ongoing'}} cf">
 								<span>{{game.data.name}} at {{printDate(game.cdate)}}</span>
 								<span>({{calcTime(game.data.time)}} on {{[0, 'easy', 'medium', 'hard'][game.data.difficulty]}})</span>
 								<div class="actions cf">
